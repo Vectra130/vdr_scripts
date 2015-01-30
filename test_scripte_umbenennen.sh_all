@@ -1,0 +1,26 @@
+#!/bin/bash
+# v1.0 all
+
+. /etc/vectra130/configs/sysconfig/.sysconfig
+
+for a in ${SYSTEMTYP} ${CLIENTTYP} all; do
+echo -e "\n"$a"\n"
+
+#SCRIPTS=$(ls -a $SCRIPTDIR/only_$SYSTEMTYP | grep -v -x "." | grep -v -x ".." | tr "\n" " ")
+SCRIPTS=$(grep -i -d skip -H ^"# v[0-9].*${a}$" $SCRIPTDIR/.[a-zA-z0-9]* | awk -F":" '{ print $1 }')
+SCRIPTS+=" "$(grep -i -d skip -H ^"# v[0-9].*${a}$" $SCRIPTDIR/[a-zA-z0-9]* | awk -F":" '{ print $1 }')
+
+cd $SCRIPTDIR
+
+for i in $SCRIPTS; do
+	DIRALT=$(dirname $a)
+#	DIRNEU="scripts_VDR_$a"
+	DIRNEU="scripts_VDR_git-sync"
+	ALT=$(basename $i)
+	NEU=${ALT}_$a
+
+	[ ! -d $SCRIPTDIR/$DIRNEU ] && mkdir $SCRIPTDIR/$DIRNEU
+	[ ! -e $SCRIPTDIR/$DIRNEU/$NEU ] && cp -a $SCRIPTDIR/$DIRALT/$ALT $SCRIPTDIR/$DIRNEU/$NEU
+#	[ $(echo $ALT | grep ".off" | wc -w) == 0 ] && echo ln -s $SCRIPTDIR/$DIRNEU/$NEU $SCRIPTDIR/$DIRALT/$ALT
+done
+done
