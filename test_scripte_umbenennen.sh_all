@@ -7,8 +7,13 @@ for a in ${SYSTEMTYP} ${CLIENTTYP} all; do
 echo -e "\n"$a"\n"
 
 #SCRIPTS=$(ls -a $SCRIPTDIR/only_$SYSTEMTYP | grep -v -x "." | grep -v -x ".." | tr "\n" " ")
+<<<<<<< HEAD
 SCRIPTS=$(grep -i -d skip -H ^"# v[0-9].*${a}$" $SCRIPTDIR/.[a-zA-z0-9]* | awk -F":" '{ print $1 }')
 SCRIPTS+=" "$(grep -i -d skip -H ^"# v[0-9].*${a}$" $SCRIPTDIR/[a-zA-z0-9]* | awk -F":" '{ print $1 }')
+=======
+SCRIPTS=$(grep -i -d skip -H ^"# v[0-9].*$a" $SCRIPTDIR/.[a-zA-z0-9]* | awk -F":" '{ print $1 }')
+SCRIPTS+=" "$(grep -i -d skip -H ^"# v[0-9].*$a" $SCRIPTDIR/[a-zA-z0-9]* | awk -F":" '{ print $1 }')
+>>>>>>> 54d19edfaf693f8f654f4bf67ba41780cf017c94
 
 cd $SCRIPTDIR
 
