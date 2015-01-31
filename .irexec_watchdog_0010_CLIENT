@@ -1,9 +1,0 @@
-# v1.3 all client
-if [ -e /tmp/.block_irexec ]; then
-	rm /tmp/.block_irexec
-else
-	if [[ ! $(pidof -xs irexec) && $(pidof -xs lircd) && ! -e /tmp/.block_irexec ]]; then
-		logger -t WATCHDOG "Starte irexec"
-		irexec $SYSCONFDIR/.irexec.conf &
-	fi
-fi
